@@ -17,7 +17,6 @@ limitations under the License.
 package watch
 
 import (
-	"fmt"
 	"sync"
 
 	"k8s.io/klog/v2"
@@ -49,7 +48,7 @@ const (
 )
 
 var (
-	DefaultChanSize int32 = 100
+	DefaultChanSize int32 = 10000
 )
 
 // Event represents a single event to a watched resource.
@@ -214,8 +213,8 @@ func (f *RaceFreeFakeWatcher) Add(obj runtime.Object) {
 		select {
 		case f.result <- Event{Added, obj}:
 			return
-		default:
-			panic(fmt.Errorf("channel full"))
+			/*		default:
+					panic(fmt.Errorf("channel full"))*/
 		}
 	}
 }
@@ -228,8 +227,8 @@ func (f *RaceFreeFakeWatcher) Modify(obj runtime.Object) {
 		select {
 		case f.result <- Event{Modified, obj}:
 			return
-		default:
-			panic(fmt.Errorf("channel full"))
+			/*		default:
+					panic(fmt.Errorf("channel full"))*/
 		}
 	}
 }
@@ -242,8 +241,8 @@ func (f *RaceFreeFakeWatcher) Delete(lastValue runtime.Object) {
 		select {
 		case f.result <- Event{Deleted, lastValue}:
 			return
-		default:
-			panic(fmt.Errorf("channel full"))
+			/*		default:
+					panic(fmt.Errorf("channel full"))*/
 		}
 	}
 }
@@ -256,8 +255,8 @@ func (f *RaceFreeFakeWatcher) Error(errValue runtime.Object) {
 		select {
 		case f.result <- Event{Error, errValue}:
 			return
-		default:
-			panic(fmt.Errorf("channel full"))
+			/*		default:
+					panic(fmt.Errorf("channel full"))*/
 		}
 	}
 }
@@ -270,8 +269,8 @@ func (f *RaceFreeFakeWatcher) Action(action EventType, obj runtime.Object) {
 		select {
 		case f.result <- Event{action, obj}:
 			return
-		default:
-			panic(fmt.Errorf("channel full"))
+			/*		default:
+					panic(fmt.Errorf("channel full"))*/
 		}
 	}
 }
